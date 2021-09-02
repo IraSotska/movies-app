@@ -13,19 +13,9 @@
 
     <context:component-scan base-package="com.iryna"/>
 
-    <bean id="movieService" class="com.iryna.service.MovieService">
-        <property name="movieDao" ref="movieDao"/>
-    </bean>
-
-    <bean id="movieController" class="com.iryna.web.controller.MovieController">
-        <property name="movieService" ref="movieService"/>
-    </bean>
-
-    <bean id="movieDao" class="com.iryna.db.jdbc.JdbcMovieDao"/>
-
-    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="location" value="classpath:/application.properties"/>
-    </bean>
+<!--    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">-->
+<!--        <property name="location" value="classpath:/application.properties"/>-->
+<!--    </bean>-->
 
     <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
         <property name="dataSource" ref="dataSource" />

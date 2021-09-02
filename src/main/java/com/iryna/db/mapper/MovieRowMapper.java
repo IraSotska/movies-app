@@ -6,8 +6,11 @@ import org.springframework.jdbc.core.RowMapper;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class MovieRowMapper implements RowMapper {
-    public Movie mapRow(ResultSet resultSet) throws SQLException {
+public class MovieRowMapper implements RowMapper<Movie> {
+
+    @Override
+    public Movie mapRow(ResultSet resultSet, int i) throws SQLException {
+
         long id = resultSet.getLong("id");
         String name = resultSet.getString("name_native");
         int yearOfRelease = resultSet.getInt("year_of_release");
@@ -23,10 +26,5 @@ public class MovieRowMapper implements RowMapper {
                 .picturePath(picturePath)
                 .price(price)
                 .build();
-    }
-
-    @Override
-    public Object mapRow(ResultSet resultSet, int i) throws SQLException {
-        return mapRow(resultSet);
     }
 }
