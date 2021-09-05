@@ -3,10 +3,9 @@ package com.iryna.web.controller;
 import com.iryna.entity.Movie;
 import com.iryna.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Locale;
 
 @RestController
 @RequestMapping("api/v1/movie")
@@ -15,8 +14,9 @@ public class MovieController {
     private MovieService movieService;
 
     @GetMapping
-    public Iterable<Movie> findAll() {
-        return movieService.findAll();
+    public Iterable<Movie> findAll(@RequestParam(required = false) String rating,
+                                   @RequestParam(required = false) String price) {
+        return movieService.getSortedMovies(rating, price);
     }
 
     @GetMapping("/random")
