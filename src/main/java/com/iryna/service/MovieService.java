@@ -14,6 +14,10 @@ public class MovieService {
         return movieDao.findAll();
     }
 
+    public Iterable<Movie> getRandomMovies() {
+        return movieDao.getRandomMovies();
+    }
+
     @Autowired
     public void setMovieDao(MovieDao movieDao) {
         this.movieDao = movieDao;

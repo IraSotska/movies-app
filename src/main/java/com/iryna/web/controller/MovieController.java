@@ -18,6 +18,11 @@ public class MovieController {
         return movieService.findAll();
     }
 
+    @GetMapping("/random")
+    public Iterable<Movie> getRandomMovies() {
+        return movieService.getRandomMovies();
+    }
+
     @Autowired
     public void setMovieService(MovieService movieService) {
         this.movieService = movieService;
