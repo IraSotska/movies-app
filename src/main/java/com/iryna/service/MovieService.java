@@ -18,6 +18,10 @@ public class MovieService {
         return movieDao.getRandomMovies();
     }
 
+    public Iterable<Movie> getMoviesByGenre(int genreId) {
+        return movieDao.getMoviesByGenre(genreId);
+    }
+
     @Autowired
     public void setMovieDao(MovieDao movieDao) {
         this.movieDao = movieDao;

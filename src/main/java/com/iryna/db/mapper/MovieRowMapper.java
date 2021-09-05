@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 
 public class MovieRowMapper implements RowMapper<Movie> {
 
@@ -13,7 +14,7 @@ public class MovieRowMapper implements RowMapper<Movie> {
 
         long id = resultSet.getLong("id");
         String name = resultSet.getString("name_native");
-        int yearOfRelease = resultSet.getInt("year_of_release");
+        Date yearOfRelease = resultSet.getDate("year_of_release");
         double rating = resultSet.getDouble("rating");
         int price = resultSet.getInt("price");
         String picturePath = resultSet.getString("picture_path");

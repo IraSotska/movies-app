@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Builder
 @Data
 @NoArgsConstructor
@@ -13,7 +15,7 @@ public class Movie {
 
     private long id;
     private String name;
-    private int yearOfRelease;
+    private Date yearOfRelease;
     private double rating;
     private String picturePath;
     private double price;
