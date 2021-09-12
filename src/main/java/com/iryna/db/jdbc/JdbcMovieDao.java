@@ -24,10 +24,13 @@ public class JdbcMovieDao implements MovieDao {
     private static final String GET_MOVIES_BY_GENRE_ID = "select id, name_native, year_of_release, rating, price, " +
             "picture_path FROM movies LEFT JOIN movie_genre ON movie_genre.movie_id = movies.id " +
             "where movie_genre.genre_id = ?;";
+    private static final String GET_MOVIE_BY_ID = "SELECT id, name_native, year_of_release, rating, price, " +
+            "picture_path FROM movies WHERE id = ?;";
 
     private static final MovieRowMapper MOVIE_ROW_MAPPER = new MovieRowMapper();
     private JdbcTemplate jdbcTemplate;
 
+    @Override
     public List<Movie> findAll(MovieRequest movieRequest) {
         return jdbcTemplate.query(generateQueryForSorting(movieRequest), MOVIE_ROW_MAPPER);
     }
@@ -40,6 +43,11 @@ public class JdbcMovieDao implements MovieDao {
     @Override
     public List<Movie> getMoviesByGenre(int genreId) {
         return jdbcTemplate.query(GET_MOVIES_BY_GENRE_ID, MOVIE_ROW_MAPPER, genreId);
+    }
+
+    @Override
+    public Movie getById(int movieId) {
+        return jdbcTemplate.query(GET_MOVIE_BY_ID, MOVIE_ROW_MAPPER, movieId).get(0);
     }
 
     protected String generateQueryForSorting(MovieRequest movieRequest) {

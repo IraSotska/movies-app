@@ -32,6 +32,11 @@ public class MovieController {
         return movieService.findAll(new MovieRequest(sortTypeList));
     }
 
+    @GetMapping("/{id}")
+    public Movie getById(@PathVariable int id){
+        return movieService.getById(id);
+    }
+
     @GetMapping("/random")
     public Iterable<Movie> getRandomMovies() {
         return movieService.getRandomMovies();
