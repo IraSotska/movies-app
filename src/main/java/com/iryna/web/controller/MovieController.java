@@ -1,5 +1,6 @@
 package com.iryna.web.controller;
 
+import com.iryna.entity.Currency;
 import com.iryna.entity.Movie;
 import com.iryna.entity.MovieRequest;
 import com.iryna.entity.sort.SortDirection;
@@ -33,8 +34,16 @@ public class MovieController {
     }
 
     @GetMapping("/{id}")
-    public Movie getById(@PathVariable int id){
-        return movieService.getById(id);
+    public Movie getById(@PathVariable int id,
+                         @RequestParam(required = false) String currency) {
+        Currency currentCurrency;
+        try {
+            currentCurrency = Currency.valueOf(currency.toUpperCase());
+        }
+        catch (Exception exception) {
+            currentCurrency = Currency.UAH;
+        }
+        return movieService.getById(id, currentCurrency);
     }
 
     @GetMapping("/random")

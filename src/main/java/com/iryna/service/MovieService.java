@@ -1,5 +1,6 @@
 package com.iryna.service;
 
+import com.iryna.entity.Currency;
 import com.iryna.entity.Movie;
 import com.iryna.entity.MovieRequest;
 
@@ -11,5 +12,5 @@ public interface MovieService {
 
     Iterable<Movie> getMoviesByGenre(int genreId);
 
-    Movie getById(int id);
+    Movie getById(int id, Currency currency);
 }
