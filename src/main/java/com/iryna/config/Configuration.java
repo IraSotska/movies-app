@@ -1,5 +1,8 @@
 package com.iryna.config;
 
+import com.iryna.entity.Session;
+import com.iryna.entity.User;
+import com.iryna.security.SecurityService;
 import lombok.extern.slf4j.Slf4j;
 import org.postgresql.ds.PGSimpleDataSource;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,6 +18,10 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 @EnableScheduling
 @org.springframework.context.annotation.Configuration
@@ -32,6 +39,8 @@ public class Configuration {
 
     @Value("${db.password}")
     private String dbPassword;
+
+    private SecurityService securityService;
 
     @Bean
     public CacheManager cacheManager() {
@@ -54,10 +63,22 @@ public class Configuration {
         return jdbcTemplate;
     }
 
+    @Bean
+    public SecurityService securityService() {
+        securityService = new SecurityService();
+        return securityService;
+    }
+
     @CacheEvict(cacheNames = {"genres"})
     @Scheduled(fixedDelay = 14400000)
     public void cacheEvict() {
         log.info("Cache evicted");
+    }
+
+    @Scheduled(fixedDelay = 18000)
+    public void removeExpiredTokens() {
+        securityService.clearExpiredTokens();
+        log.info("expired tokens removed");
     }
 
     @Bean
@@ -66,5 +87,10 @@ public class Configuration {
         propertySourcesPlaceholderConfigurer.setLocation(new ClassPathResource("application.properties"));
         propertySourcesPlaceholderConfigurer.setIgnoreUnresolvablePlaceholders(true);
         return propertySourcesPlaceholderConfigurer;
+    }
+
+    @Bean
+    public Map<String, Session> getMap() {
+        return Collections.synchronizedMap(new HashMap<>());
     }
 }
